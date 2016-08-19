@@ -1,0 +1,103 @@
+.emoji-card-wrapper {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 17px;
+    box-shadow: 1px 1px 2px #ccc;
+    margin-top: 15px;
+    position: relative;
+
+    .desc {
+        background: white;
+        padding: 5px 10px;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+        &:hover {
+            color: #1d99d1;
+        }
+    }
+
+    .author {
+        cursor: pointer;
+    }
+
+    .delete-btn {
+        position: absolute;
+        padding: 3px 15px;
+        background: #D24D57;
+        color: white;
+        cursor: pointer;
+        right: 7px;
+        top: 32px;
+        font-size: 13px;
+        border-radius: 2px;
+    }
+
+    .creation-info {
+        padding: 5px 10px;
+        background: #ddd;
+        font-size: 13px;
+
+        @include display(flex);
+
+        @include align-items(center);
+
+        @include justify-content(space-between);
+    }
+
+    .middle-part {
+        padding: 10px;
+        background: white;
+
+        .use {
+            margin: 5px 0px;
+        }
+    }
+
+    .code{
+        display: inline-block;
+    }
+
+    .tags {
+        background: white;
+        padding-bottom: 5px;
+
+        .tag {
+            font-size: 13px;
+            background: #e5e5e5;
+            padding: 3px 10px;
+            margin: 0px 3px;
+            display: inline-block;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+    }
+
+    .action-btns {
+        background: white;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 10px 0px;
+
+        @include display(flex);
+
+        @include justify-content(space-between);
+
+        img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .btn {
+            margin: 0px 15px;
+            cursor: pointer;
+            display: inline-block;
+
+            &.voted {
+                cursor: default;
+                color: orange;
+                pointer-events: none;
+            }
+        }
+    }
+}

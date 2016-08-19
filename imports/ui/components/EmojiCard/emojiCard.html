@@ -1,0 +1,53 @@
+<div class="emoji-card-wrapper">
+	<div class="creation-info">
+		<div class="date">{{vm.emoji.createdDt | date : 'LLLL dd,yyyy' : timezone}}</div>
+		<div class="author" ng-click="vm.goToUserEmoji(vm.emoji.createdById)">Contributed By {{vm.userById[0].profile.name}}</div>
+	</div>
+	<div class="desc" ng-click="vm.goToEmoji(vm.emoji._id)" ng-bind-html="vm.emoji.emojiDesc"></div>
+	<div class="delete-btn" ng-click="vm.removeEmoji(vm.emoji._id)" ng-if="vm.userId === vm.emoji.createdById">Remove</div>
+	
+	<div class="middle-part">
+		<div class="code" id="{{vm.emoji._id}}_code" ng-bind-html="vm.emoji.emojiCode"></div>
+		<div class="" ng-if="vm.emoji.isMobile">
+			<span>{{vm.platform}} version:</span>
+			<span  id="{{vm.emoji._id}}_code_platform" ng-bind-html="vm.emoji.mobileEmoji"></span>
+		</div>
+		<div class="code" ng-bind-html=""></div>
+		<div class="use" ng-bind-html="vm.emoji.emojiUse"></div>
+	</div>
+	<div class="tags">
+		<span class="tag" ng-repeat="tag in vm.emoji.tags" ng-click="vm.goToTag(tag)">{{tag}}</span>
+	</div>
+	<canvas id="emojiCanvas_{{vm.emoji._id}}" width="800" height="400" hidden="true"></canvas>
+	<div class="action-btns">
+		<div>
+			<div class="upvote-btn btn" ng-class="{'voted':vm.isEmojiUpVoted(vm.emoji._id)}" ng-click="vm.upvoteEmoji(vm.emoji._id)">
+				<span><i class="fa fa-thumbs-up"></i></span>
+				<span>{{vm.noOfUpvote(vm.emoji._id)}}</span>
+			</div>
+			<div class="downvote-btn btn" ng-class="{'voted':vm.isEmojiDownVoted(vm.emoji._id)}" ng-click="vm.downvoteEmoji(vm.emoji._id)">
+				<span><i class="fa fa-thumbs-down"></i></span>
+				<span>{{vm.noOfDownvote(vm.emoji._id)}}</span>
+			</div>
+			<div class="buy-btn btn" ng-click="vm.goToBuy(vm.emoji._id)">
+				<span><i class="fa fa-shopping-cart"></i></span>
+				<span>Buy</span>
+			</div>
+			<div class="buy-btn btn" ng-if="vm.emoji.isMobile" ng-click="vm.goToBuyPlatformVersion(vm.emoji._id)">
+				<span><i class="fa fa-shopping-cart"></i></span>
+				<span>Buy {{vm.platform}} version</span>
+			</div>	
+		</div>
+		<div ng-if="vm.shareButtons">
+			<div class="btn" ng-click="vm.shareToFacebook(vm.emoji._id)">
+				<span><i class="fa fa-facebook"></i></span>
+			</div>
+			<div class="btn" ng-click="vm.shareToTwitter(vm.emoji._id)">
+				<span><i class="fa fa-twitter"></i></span>
+			</div>
+			<div class="btn" ng-click="vm.shareToGoogle(vm.emoji._id)">
+				<span><i class="fa fa-google"></i></span>
+			</div>	
+		</div>
+	</div>
+</div>

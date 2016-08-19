@@ -1,0 +1,60 @@
+<div class="login-component">
+	<div class="form-wrapper">
+		<div class="title" ng-if="vm.shouldShowLogin">Login</div>
+		<div class="title" ng-if="vm.shouldShowRegister">Create Account</div>
+		<div class="title" ng-if="vm.shouldShowForgotPassword">Forgot Password</div>
+		<div class="error" ng-if="vm.formError">
+			{{vm.formError}}
+		</div>
+		<div class="success" ng-if="vm.formSuccess">
+			{{vm.formSuccess}}
+		</div>
+		<form class="form" ng-if="vm.shouldShowLogin" ng-submit="vm.submitLogin()">
+			<div class="form-group">
+				<input type="text" ng-model="vm.form.user" placeholder="Username" required="" />
+			</div>
+			<div class="form-group">
+				<input type="password" ng-model="vm.form.password" placeholder="Password" required="" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Login"/>
+			</div>			
+		</form>
+		<form class="form" ng-if="vm.shouldShowRegister" ng-submit="vm.submitRegister()">
+			<div class="form-group">
+				<input type="text" ng-model="vm.form.username" placeholder="Username" required="" />	
+			</div>
+			<div class="form-group">
+				<input type="email" ng-model="vm.form.email" placeholder="Email" required="" />
+			</div>
+			<div class="form-group">
+				<input type="text" ng-model="vm.form.profile.name" placeholder="Display Name" required="" />
+			</div>
+			<div class="form-group">
+				<input type="password" ng-model="vm.form.password" placeholder="Password" required="" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create Account"/>
+			</div>			
+		</form>
+		<form class="form" ng-if="vm.shouldShowForgotPassword" ng-submit="vm.submitForgotPassword()">
+			<div class="form-group">
+				<input type="text" ng-model="vm.form.email" placeholder="Enter Email" required="" />
+			</div>
+			<div class="form-group">
+				<input type="submit" ng-if="!vm.isSubmitting" value="Send"/>
+				<div class="loader" ng-if="vm.isSubmitting"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></div>
+			</div>			
+		</form>
+		<div class="extra-links">
+			<div class="item" ng-if="!vm.shouldShowRegister" ng-click="vm.showRegisterForm()">Create Account</div>
+			<div class="item" ng-if="!vm.shouldShowForgotPassword" ng-click="vm.showForgotPasswordForm()">Forgot Password</div>
+			<div class="item" ng-if="!vm.shouldShowLogin" ng-click="vm.showLoginForm()">Login Here</div>
+		</div>
+		<div class="clearfix">
+			<div class="fb-btn" ng-click="vm.loginWithFB()">
+				Login With Facebook
+			</div>
+		</div>
+	</div>
+</div>

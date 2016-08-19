@@ -1,0 +1,14 @@
+<div class="add-emoji-wrapper">
+	<div class="form-wrapper">
+		<div class="title">
+			Add Emoji
+		</div>
+		<form>
+			<div class="form-group"><input type="text" placeholder="Emoji" ng-model="vm.form.emojiCode"  required="" /></div>
+			<div class="form-group"><input type="text" placeholder="Description" ng-model="vm.form.emojiDesc" required="" /></div>
+			<div class="form-group"><input type="text" placeholder="Sentence" ng-model="vm.form.emojiUse" /></div>
+			<div id="tags"></div>
+			<div class="form-group"><input type="submit" ng-click="vm.addEmoji()" /></div>
+		</form>
+	</div>
+</div>

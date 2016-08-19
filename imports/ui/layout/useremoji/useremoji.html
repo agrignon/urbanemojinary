@@ -1,0 +1,77 @@
+<div class="page-wrapper">
+	<div class="header">
+		<div class="max-960">
+			<div class="top">
+				<div class="logo"><img src="/img/logo.jpg" alt="urban emojinary"></div>
+				<div class="buttons">
+					<span class="btn" ng-if="vm.isLoggedIn()"  ng-click="vm.openAddEmojiModal()">Add Emoji</span>
+					<span class="btn active" ng-if="vm.isLoggedIn()" ng-click="vm.goToUserEmojies()">My Emojis</span>
+					<span class="btn" ng-click="vm.goBack(false)">Most Popular</span>
+					<span class="btn" ng-click="vm.goBack(true)">Most Recent</span>
+					<span class="btn" ng-if="!vm.isLoggedIn()" ng-click="vm.openLoginModal()">Login</span>
+					<span class="btn" ng-if="vm.isLoggedIn()" ng-click="vm.logout()">Logout</span>
+				</div>
+			</div>
+
+			<div class="bottom">
+				<span class="search-icon">
+					<i class="fa fa-search"></i>
+				</span>
+				<input type="text" placeholder="Search Emoji" ng-change="vm.searchChanged($event)" ng-keyup="vm.searchChanged($event)" ng-model="vm.search" />
+				<span class="search-icon clear-icon" ng-click="vm.search = '';vm.suggestedEmojies = [];" ng-if="vm.search.length > 0">
+					<i class="fa fa-times"></i>
+				</span>
+				<div class="suggestedSearch" ng-if="vm.search.length > 0">
+					<div class="item" 
+							ng-if="vm.suggestedEmojies.length > 0" 
+							ng-repeat="emoji in vm.suggestedEmojies" 
+							ng-bind-html="emoji.emojiHTML" 
+							ng-click="vm.showSuggestedEmoji(emoji._id)"
+					></div>
+					<div class="all-btn" ng-click="vm.goToSearch()">Search all emojis for '{{vm.search}}'</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<div class="max-960">
+		<div class="main-content-wrapper">
+<!-- 			<div class="back-btn" ng-click="vm.goBack()">
+				<span><i class="fa fa-arrow-left"></i></span>
+				<span>Back</span>
+			</div> -->
+			<div class="title" ng-if="vm.userEmojies.length === 0">
+					No emojies found.
+			</div>
+			<div class="search-emoji-wrapper" ng-if="vm.userEmojies.length > 0 && !vm.clickedSuggestedEmoji">
+				<div class="title">
+					My Emojis
+				</div>
+				<emoji-card auth-dialog="vm.openLoginModal()" related="useremoji" emoji-details="emoji" share-buttons="vm.shareButtons"   ng-repeat="emoji in vm.sortedUserEmojies()"></emoji-card>	
+			</div>
+			<div class="suggested-emoji-wrapper" ng-if="vm.clickedSuggestedEmoji">
+				<div class="title">
+					Searched emoji
+				</div>
+				<emoji-card auth-dialog="vm.openLoginModal()" related="search" emoji-details="vm.clickedSuggestedEmoji" share-buttons="vm.shareButtons"></emoji-card>
+			</div>
+		</div>
+	</div>
+	<div class="sa-modal" ng-if="vm.shouldShowLogin">
+		<div class="sa-modal-inner">
+			<div class="close-modal-btn" ng-click="vm.resetModal()">
+				<i class="fa fa-times"></i>
+			</div>
+			<login on-success="vm.onLoginSuccess()"></login>
+		</div>
+	</div>
+	<div class="sa-modal" ng-if="vm.shouldShowAddDialog">
+		<div class="sa-modal-inner">
+			<div class="close-modal-btn" ng-click="vm.resetModal()">
+				<i class="fa fa-times"></i>
+			</div>
+			<add-emoji on-successfull-add="vm.onSuccessAddEmoji()"></add-emoji>
+		</div>
+	</div>
+</div>

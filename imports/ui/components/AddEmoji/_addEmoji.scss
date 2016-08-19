@@ -1,0 +1,12 @@
+.add-emoji-wrapper{
+	
+	#tags{
+		font-family: 'PT Sans', sans-serif;
+		font-size: 17px; 
+		background: white;
+		position: relative;
+		@include display(flex);
+		@include align-items(center);
+		@include justify-content(center);
+	}
+}

@@ -1,0 +1,10 @@
+@import './_normalize.scss';
+
+@import '../imports/scss/bourbon/_bourbon.scss';
+@import '../imports/scss/_taggle.scss';
+@import '../imports/scss/_common.scss';
+
+@import '../imports/ui/layout/home/_home.scss';
+@import '../imports/ui/layout/emoji/_emoji.scss';
+@import '../imports/ui/components/EmojiCard/_emojiCard.scss';
+@import '../imports/ui/components/AddEmoji/_addEmoji.scss';
