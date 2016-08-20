@@ -62,7 +62,7 @@ Meteor.startup(() => {
 
 	//Setup mail configuration
     if (Meteor.isServer) {
-        process.env.MAIL_URL = "smtp://sarju.hansaliya%40gmail.com:33662Watson@smtp.gmail.com:465/";
+        process.env.MAIL_URL = "smtp://admin%40urbanemojinary.com:m0nkeyb0y@smtp.mailgun.org:587/";
 
         // HACK - 2a clear the pictures db
         var onceEveryMorning = new Cron(function() {
