@@ -73,32 +73,37 @@ Meteor.startup(() => {
         });
 
     }
-/*
+
     //implement index function for collection
     var Future = Npm.require('fibers/future');
     Mongo.Collection.prototype.getIndexes = function() {
+        
         var raw = this.rawCollection();
         var future = new Future();
+        
         raw.indexes(function(err, indexes) {
             if (err) {
-                future.throw(err);
-            }
-
-            future.return(indexes);
+                future.return({length:0});
+            } 
+            else 
+                future.return(indexes);
         });
+        
         return future.wait();
+        
     };
 
     //Setup index on emoji table
     if (Emojies.getIndexes().length < 2) {
+        
         Emojies._ensureIndex({
             "emojiCode": "text",
             "emojiDesc": "text",
             "emojiUse": "text",
             "tags": "text"
         });
+        
     }
-*/
 
 
     function toBuffer(ab) {
