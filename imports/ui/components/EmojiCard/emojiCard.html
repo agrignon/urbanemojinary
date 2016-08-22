@@ -19,6 +19,7 @@
 		<span class="tag" ng-repeat="tag in vm.emoji.tags" ng-click="vm.goToTag(tag)">{{tag}}</span>
 	</div>
 	<canvas id="emojiCanvas_{{vm.emoji._id}}" width="800" height="400" hidden="true"></canvas>
+	<div id="zazzle" data-href="http://zazzle.com"></div>
 	<div class="action-btns">
 		<div>
 			<div class="upvote-btn btn" ng-class="{'voted':vm.isEmojiUpVoted(vm.emoji._id)}" ng-click="vm.upvoteEmoji(vm.emoji._id)">

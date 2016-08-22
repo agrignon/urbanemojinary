@@ -137,6 +137,8 @@ class EmojiCardCtrl {
         context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
 
+        console.log("cancas width is "+canvas.width);
+
         context.font = '175px Arial';
         context.textAlign = 'center';
         context.textBaseline = 'middle';
@@ -146,7 +148,10 @@ class EmojiCardCtrl {
         //var imageID = EmojieImages.insert({image: dataURL});
         Meteor.call('storeImage', {image: dataURL}, function(error, imageID) {
             var url = "http://www.zazzle.com/api/create/at-238415339136073373?rf=238415339136073373&ax=DesignBlast&sr=250669699809772584&cg=196751746949610314&t__useQpc=false&ed=true&t__smart=false&continueUrl=http%3A%2F%2Fwww.zazzle.com%2Furban_emojinary&rut=Go%20back%20to%20Urban%20Emojinary's%20store&fwd=ProductPage&tc=&ic=&t_definition_txt=" + encodeURIComponent(e.emojiDesc) + "&t_emoji_iid=http%3A%2F%2Furbanemojinary.com%2FemojiImage%2F" + imageID;
-            window.open(url, '_system');
+            var open = window.open(url, '_blank');
+            if (open == null || typeof(open)=='undefined')
+                alert("Turn off your pop-up blocker in Settings / Safari / Block Pop-ups");
+
         });
     }
     goToBuyPlatformVersion(id){
