@@ -41,10 +41,10 @@ class EmojiCardCtrl {
         Analytics.insert(anlytcs_data);
 
         em.isMobile = this.detectmob();
-        em.mobileEmoji = emojione.shortnameToUnicode(em.emojiCode);
-        em.emojiCode = emojione.toImage(em.emojiCode);
-        em.emojiDesc = emojione.toImage(em.emojiDesc);
-        em.emojiUse = emojione.toImage(em.emojiUse);
+        em.mobileEmoji = emojione.shortnameToUnicode(em.emojiCode?em.emojiCode:"");
+        em.emojiCode = emojione.toImage(em.emojiCode?em.emojiCode:"");
+        em.emojiDesc = emojione.toImage(em.emojiDesc?em.emojiDesc:"");
+        em.emojiUse = emojione.toImage(em.emojiUse?em.emojiUse:"");
         this.emoji = em;
 
         this.subscribe('uservotes');
@@ -137,8 +137,6 @@ class EmojiCardCtrl {
         context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        console.log("cancas width is "+canvas.width);
-
         context.font = '175px Arial';
         context.textAlign = 'center';
         context.textBaseline = 'middle';
@@ -148,11 +146,54 @@ class EmojiCardCtrl {
         //var imageID = EmojieImages.insert({image: dataURL});
         Meteor.call('storeImage', {image: dataURL}, function(error, imageID) {
             var url = "http://www.zazzle.com/api/create/at-238415339136073373?rf=238415339136073373&ax=DesignBlast&sr=250669699809772584&cg=196751746949610314&t__useQpc=false&ed=true&t__smart=false&continueUrl=http%3A%2F%2Fwww.zazzle.com%2Furban_emojinary&rut=Go%20back%20to%20Urban%20Emojinary's%20store&fwd=ProductPage&tc=&ic=&t_definition_txt=" + encodeURIComponent(e.emojiDesc) + "&t_emoji_iid=http%3A%2F%2Furbanemojinary.com%2FemojiImage%2F" + imageID;
+  
+            console.log("URL: http://localhost:3000/emojiImage/"+imageID);
+
             var open = window.open(url, '_blank');
             if (open == null || typeof(open)=='undefined')
                 alert("Turn off your pop-up blocker in Settings / Safari / Block Pop-ups");
 
         });
+    }
+    goToBuyGeneric(id) {
+        var anlytcs_data = {
+            type: 'buy',
+            emojiId: id,
+            dt: new Date(),
+        }
+        Analytics.insert(anlytcs_data);
+
+        //Fetch Emoji from db
+        var e = Emojies.findOne({
+            _id: id
+        });
+
+        var canvas;
+        var context;
+
+        canvas = document.getElementById('emojiCanvas_' + id);
+        context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        //convert emoji to canvas then canvas to data url
+        html2canvas(canvas,{
+            onrendered: function(canvas) {
+                var dataURL = canvas.toDataURL();
+
+                //var imageID = EmojieImages.insert({image: dataURL});
+                Meteor.call('storeImage', {image: dataURL}, function(error, imageID) {
+                    var url = "http://www.zazzle.com/api/create/at-238415339136073373?rf=238415339136073373&ax=DesignBlast&sr=250669699809772584&cg=196751746949610314&t__useQpc=false&ed=true&t__smart=false&continueUrl=http%3A%2F%2Fwww.zazzle.com%2Furban_emojinary&rut=Go%20back%20to%20Urban%20Emojinary's%20store&fwd=ProductPage&tc=&ic=&t_definition_txt=" + encodeURIComponent(e.emojiDesc) + "&t_emoji_iid=http%3A%2F%2Furbanemojinary.com%2FemojiImage%2F" + imageID;
+    
+                    console.log("URL: http://localhost:3000/emojiImage/"+imageID);
+
+                    var open = window.open(url, '_blank');
+                    if (open == null || typeof(open)=='undefined')
+                        alert("Turn off your pop-up blocker in Settings / Safari / Block Pop-ups");
+
+                });
+            }
+        });
+
     }
     goToBuyPlatformVersion(id){
         var anlytcs_data = {

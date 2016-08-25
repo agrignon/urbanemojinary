@@ -34,10 +34,16 @@
 				<span><i class="fa fa-shopping-cart"></i></span>
 				<span>Buy</span>
 			</div>
+			<div class="buy-btn btn" ng-click="vm.goToBuyGeneric(vm.emoji._id)">
+				<span><i class="fa fa-shopping-cart"></i></span>
+				<span>Buy Generic</span>
+			</div>
+			<!--
 			<div class="buy-btn btn" ng-if="vm.emoji.isMobile" ng-click="vm.goToBuyPlatformVersion(vm.emoji._id)">
 				<span><i class="fa fa-shopping-cart"></i></span>
 				<span>Buy {{vm.platform}} version</span>
-			</div>	
+			</div>
+			-->	
 		</div>
 		<div ng-if="vm.shareButtons">
 			<div class="btn" ng-click="vm.shareToFacebook(vm.emoji._id)">
