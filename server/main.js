@@ -140,7 +140,6 @@ Meteor.startup(() => {
     });
 
     Picker.route('/emojiImage/:id', function(params, req, res, next) {
-        console.log("hello", params);
         var image = EmojieImages.findOne({
             _id: params.id
         });
