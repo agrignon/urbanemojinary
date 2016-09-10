@@ -23,6 +23,7 @@ import {
     EmojieImages
 }
 from '../../../api/emojiesImage/index.js';
+import rasterizeHTML from 'rasterizehtml';
 
 class EmojiCardCtrl {
     constructor($reactive, $scope, $state,$http) {
@@ -168,7 +169,50 @@ class EmojiCardCtrl {
             _id: id
         });
 
+        var canvas = document.getElementById("emojiCanvas_"+ id);
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        var html = emojione.toImage(e.emojiCode);
+        var newHTML = '<div class="table" id="emojiImage_{{vm.emoji._id}}"><div id="rowParent" class="row"></div>';
+        var nodes = $.parseHTML(html);
+        $.each( nodes, function( i, el ) {
+            var text = "";
 
+            if (jQuery(el).prop('outerHTML')==null) {
+                // text
+                text = '<h1 style="font-size:75px;text-align:center;vertical-align:middle;">'+jQuery(el).text()+'</h1>';
+            } else {
+                // image
+                jQuery(el).attr('style','zoom:2;display:block;margin:auto;height:auto;max-height:100%;width:auto;max-width:100%;');
+                text = jQuery(el).prop('outerHTML');
+            }
+
+            newHTML = newHTML + "<div class=\"cell\"><div class=\"contents\">"+text+"</div></div>";
+        });
+
+        newHTML = newHTML + "</div>"
+        console.log("** OLD HTML:"+html);
+        console.log("** NEW HTML:"+newHTML);
+
+        rasterizeHTML.drawHTML(html, canvas).then(function (result) {
+            var dataURL = canvas.toDataURL();
+
+            //var imageID = EmojieImages.insert({image: dataURL});
+            Meteor.call('storeImage', {image: dataURL}, function(error, imageID) {
+                var url = "http://www.zazzle.com/api/create/at-238415339136073373?rf=238415339136073373&ax=DesignBlast&sr=250669699809772584&cg=196751746949610314&t__useQpc=false&ed=true&t__smart=false&continueUrl=http%3A%2F%2Fwww.zazzle.com%2Furban_emojinary&rut=Go%20back%20to%20Urban%20Emojinary's%20store&fwd=ProductPage&tc=&ic=&t_definition_txt=" + encodeURIComponent(e.emojiDesc) + "&t_emoji_iid=http%3A%2F%2Furbanemojinary.com%2FemojiImage%2F" + imageID;
+      
+                console.log("URL: http://localhost:3000/emojiImage/"+imageID);
+
+                var open = window.open(url, '_blank');
+                if (open == null || typeof(open)=='undefined')
+                    alert("Turn off your pop-up blocker in Settings / Safari / Block Pop-ups");
+
+            });
+        }, function (e) {
+            console.log('An error occured:', e);
+        });
+/*
         var sourceElement = document.getElementById('emojiImage_' + id);
 
         emojione.imagePathSVG = './emojione/assets/svg/';
@@ -176,11 +220,13 @@ class EmojiCardCtrl {
         emojione.imageType = 'png';
         var html = emojione.toImage(e.emojiCode);
 
-        //console.log("** HTML:"+html);
+        console.log("** HTML:"+html);
 
         var dom = jQuery.parseHTML(html);
+
+        sourceElement.empty()
+
         var parent = jQuery('.row', sourceElement);
-        parent.empty();
 
         $.each( dom, function( i, el ) {
             var text = "";
@@ -216,6 +262,7 @@ class EmojiCardCtrl {
             height:600,
             timeout:0
         });
+*/
 
 /*
 
