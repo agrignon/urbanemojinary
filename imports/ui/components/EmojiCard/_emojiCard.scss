@@ -101,24 +101,37 @@
         }
     }
 
-    .table {
-        display: table;
-        width: 800px;
-        height: 400px;
-    }
+.frame {  
+   height: 400px;
+   width: 800px;
+   position: relative;
+}
 
-    .table .row {
-        display: table-row;
-    }
+.dummy {
+    padding-top: 100%; /* forces 1:1 aspect ratio */
+}
 
-    .table .row .cell {
-        display: table-cell;
-        padding: 1px;
-    }
+.img-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    text-align:center; /* Align center inline elements */
+    font: 0/0 a;
+}
 
-    .table .row .cell .contents {
-        width: 100%;
-        height: 400px;
-    }
+.img-container .centerer {
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.img-container img {
+    vertical-align: middle;
+    display: inline-block;
+}
+
 
 }

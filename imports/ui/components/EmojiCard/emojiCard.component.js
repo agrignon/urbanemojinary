@@ -174,7 +174,7 @@ class EmojiCardCtrl {
         context.clearRect(0, 0, canvas.width, canvas.height);
         
         var html = emojione.toImage(e.emojiCode);
-        var newHTML = '<div class="table" id="emojiImage_{{vm.emoji._id}}"><div id="rowParent" class="row"></div>';
+        var newHTML = '<style>.responsive-container {height: 400px;width: 800px;position: relative;} .dummy {padding-top: 100%;} .img-container {position: absolute;top: 0;bottom: 0;left: 0;right: 0;text-align:center;font: 0/0 a;} .img-container .centerer {display: inline-block;vertical-align: middle;height: 100%;} .img-container img {vertical-align: middle;display: inline-block;}</style><div class="responsive-container"><div class="dummy"></div><div class="img-container"><div class="centerer"></div>';
         var nodes = $.parseHTML(html);
         $.each( nodes, function( i, el ) {
             var text = "";
@@ -184,18 +184,18 @@ class EmojiCardCtrl {
                 text = '<h1 style="font-size:75px;text-align:center;vertical-align:middle;">'+jQuery(el).text()+'</h1>';
             } else {
                 // image
-                jQuery(el).attr('style','zoom:2;display:block;margin:auto;height:auto;max-height:100%;width:auto;max-width:100%;');
+                //jQuery(el).attr('style','zoom:2;display:block;margin:auto;height:auto;max-height:100%;vertical-align:middle;width:auto');
                 text = jQuery(el).prop('outerHTML');
             }
 
-            newHTML = newHTML + "<div class=\"cell\"><div class=\"contents\">"+text+"</div></div>";
+            newHTML = newHTML + text;
         });
 
-        newHTML = newHTML + "</div>"
-        console.log("** OLD HTML:"+html);
-        console.log("** NEW HTML:"+newHTML);
+        newHTML = newHTML + "</div></div>"
+        //console.log("** OLD HTML:"+html);
+        //console.log("** NEW HTML:"+newHTML);
 
-        rasterizeHTML.drawHTML(html, canvas).then(function (result) {
+        rasterizeHTML.drawHTML(newHTML, canvas).then(function (result) {
             var dataURL = canvas.toDataURL();
 
             //var imageID = EmojieImages.insert({image: dataURL});
